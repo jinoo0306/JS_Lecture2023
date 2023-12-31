@@ -1,21 +1,22 @@
-import React, { useState, useEffect } from "react";
-
-function UserStatus(props) {
-    const [isOnline, setIsOnline] = useState(null);
-
-    useEffect(() => {
-        function handleStatusChange(status) {
-            setIsOnline(status.isOnline);
-        }
-        ServerAPI.subscribeUserStatus(props.user.id, handleStatusChange);
-        return () => {
-            ServerAPI.unsubscribeUserStatus(props.user.id, handleStatusChange);
+class Toggle extends React.Component {
+    comstructor(props) {
+        super(props);
+        this.state = {
+            isToggleOn: true,
         };
-    });
 
-    if (isOnline === null) {
-        return '대기중...'
+        // callbackdptj this를 사용하기 위해서는 바인딩 필수
+        this.handleClick = this.handleClick.bind(this);
     }
-    return isOnline ? '온라인' : '오프라인';
 
+    handleClick() {
+        this.setState({
+            isToggleOn: !this.state.isToggleOn,
+        });
+    }
+    render() {
+        return (
+            <button onClick={this.handleClick}>{this.state.isToggleO ? 'on' : 'off'}</button>
+        );
+    }
 }
